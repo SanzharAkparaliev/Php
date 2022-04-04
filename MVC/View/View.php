@@ -54,7 +54,16 @@
 			include "./View/Regna/mainblock.php";
 			printMB($title, $contentMainBlock);
 		}
+
+
+		public function showCookie($message){			
+			$title = "Show data from Cookie";
+			
+			include "./View/Regna/mainblock.php";
+			printMB($title, $message);
+		}
 		
+
 		public function importHead(){
 			include "./View/Regna/inner-page-head.html";
 		}
