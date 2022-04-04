@@ -54,6 +54,13 @@
 			include "./View/Regna/mainblock.php";
 			printMB($title, $contentMainBlock);
 		}
+
+		public function connectDB($message){
+			$title = "Connection result";
+
+			include "./View/Regna/mainblock.php";
+			printMB($title,$message);
+		}
 		
 		public function importHead(){
 			include "./View/Regna/inner-page-head.html";
