@@ -56,8 +56,8 @@
 		}
 
 
-		public function showCookie($message){			
-			$title = "Show data from Cookie";
+		public function showSession($message){			
+			$title = "Show data from Session";
 			
 			include "./View/Regna/mainblock.php";
 			printMB($title, $message);

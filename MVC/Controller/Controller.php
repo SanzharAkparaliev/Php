@@ -20,29 +20,30 @@
 									$_POST["city"],
 									$_POST["password"]
 								);
-							setcookie('userNameCookie',$user -> getUserName(),time() + (86400),"/");
+							session_start();
+							$_SESSION["userNameSession"] = $user->getUserName();
 							$view->handleUserFormData($user);
 							$view->importFoot();
 						break;
-					case "showCookie":
+					case "showSession":
 						$view->importHead();
-
-						if(!isset($_COOKIE["userNameCookie"])){
-							$message = "<h3>Cookie named 'userNameCookie' is not set!</h3>";
+						session_start();
+						if(!isset($_SESSION["userNameSession"])){
+							$message = "<h3>Session named 'userNameSession' is not set!</h3>";
 						}else{
-							$message = "<h3>Cookie 'userNameCookie' is set! <br> Value is : ".$_COOKIE["userNameCookie"]."</h3>"
-							."<p><a href='index.php?page=deleteCookie'>Click here to delete Cookie data</a></p>";
+							$message = "<h3>Session 'userNameSession' is set! <br> Value is : ".$_SESSION["userNameSession"]."</h3>"
+							."<p><a href='index.php?page=deleteSession'>Click here to delete Session data</a></p>";
 						}
 
-						$view->showCookie($message);
+						$view->showSession($message);
 						$view->importFoot();
 					break;
 
-					case "deleteCookie":
-						setcookie("userNameCookie","",time() -(3600),"/");
-						$message = "<h3>Cookie data deleted!!!</h3>";
+					case "deleteSession":
+						session_destroy();
+						$message = "<h3>Session data deleted!!!</h3>";
 						$view->importHead();
-						$view->showCookie($message);
+						$view->showSession($message);
 						$view->importFoot();
 					break;
 					default : 
