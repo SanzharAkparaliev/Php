@@ -52,6 +52,8 @@
 								<tr><td>User city</td><td>".$user->getUserCity()."</td></tr>
 								<tr><td>User password</td><td>".$user->getUserPassword()."</td></tr>
 							</table>
+							<p><a href='index.php?page=showallusers'>Show all users</a><p>
+							<p>&nbsp</p>
 						";
 			include "./View/Regna/mainblock.php";
 			printMB($title, $contentMainBlock);
@@ -59,6 +61,13 @@
 
 		public function connectDB($message){
 			$title = "Connection result";
+
+			include "./View/Regna/mainblock.php";
+			printMB($title,$message);
+		}
+
+		public function showMessage($message){
+			$title = "Message";
 
 			include "./View/Regna/mainblock.php";
 			printMB($title,$message);
@@ -80,6 +89,12 @@
 					<td>".$user->getUserGender()."</td>
 					<td>".$user->getUserCity()."</td>
 					<td>".$user->getUserPassword()."</td>
+					<td> 
+						<form action='index.php?page=deleteUser' method='post'>
+							<input type='hidden' name='userId' value='".$user->getId()."'>
+							<input type='submit' value='Delete'>
+						</form>
+					</td>
 				</tr>
 				";
 			}

@@ -7,13 +7,15 @@
 		private $userCity;
 		private $userPassword;
 		
-		public function __construct($userName, $userEmail, $userGender, $userCity,				$userPassword){
+		public function __construct($id, $userName, $userEmail, $userGender, $userCity,	$userPassword){
+			if($id) $this->id = $id;
 			$this->userName = $userName;
 			$this->userEmail = $userEmail;
 			$this->userGender = $userGender;
 			$this->userCity = $userCity;
 			$this->userPassword = $userPassword;
 		}
+
 		
 		public function getUserName(){
 			return $this->userName;

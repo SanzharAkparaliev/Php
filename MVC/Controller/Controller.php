@@ -11,6 +11,7 @@
 						break;
 					case "formData": 
 							$user = new User(
+								    null,
 									$_POST["name"],
 									$_POST["email"],
 									$_POST["gender"],
@@ -25,7 +26,7 @@
 								$resultMessage = $model->insertNewUser($user);
 
 								if($resultMessage == "Something gone wrong"){
-
+									$view -> showMessage($resultMessage);
 								}else{
 									$user->setId($resultMessage);
 									$view->handleUserFormData($user);
@@ -35,7 +36,7 @@
 						break;
 					
 			     	
-						case "connect":
+					case "connect":
 						$connectResult = $model->connectDB();
 						
 						if($connectResult == "Connection failed"){
@@ -44,7 +45,7 @@
 							$view->connectDB($connectResult);
 						}
 						$model->getConn()->close();
-						break;	
+					break;	
 
 
 
@@ -54,11 +55,36 @@
 							$view->connectDB($connectResult. ": ".$model->getConn()->connect_error);
 						}else{
 							$users = $model -> getAllUsers();
+							$view->showAllUsers($users);
 						}
 						$model->getConn()->close();
-						$view->showAllUsers($users);
-						break;
+						
+					break;
 
+					case "deleteUser":
+							$connectResult = $model->connectDB();
+							if($connectResult == "Connection failed"){
+								$view->connectDB($connectResult.": ".$model->getConn()->connect_error);
+							}
+							else{
+								if(isset($_POST["userId"])){
+									$resultMessage = $model->deleteUser($_POST["userId"]);
+									
+									if($resultMessage == "Ooopps! Something gone wrong!"){
+										$view->showMessage($resultMessage);
+									}
+									else{
+										$message = "<h1>User deleted successfully!</h1>
+													<p>".$resultMessage." rows affected</p>";
+										$view->showMessage($message);
+									}
+								}
+								else{
+									$view->showMessage("User id is undefined");
+								}
+							}
+							$model->getConn()->close();
+						break;
 
 					default : $view->index();
 				}

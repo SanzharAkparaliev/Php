@@ -104,6 +104,32 @@
 			}
 		}
 		
+		public function deleteUser($userId){
+			$stmt = $this->conn -> stmt_init();
+
+			if ($stmt -> prepare("DELETE FROM `user` WHERE `user`.`id` = ?")) {
+		
+				$stmt->bind_param('d', $userId);
+				
+				// Execute query
+				$stmt -> execute();
+
+				if($stmt->error){
+					$message = "Ooopps! Something gone wrong!";
+				}
+				else{
+					$message = $stmt->affected_rows;
+				}
+				// Close statement
+				$stmt -> close();
+				  
+				return $message;
+			}
+			else{
+				$message = "Ooopps! Something gone wrong!";
+				return $message;
+			}
+		}
 	
 
 		
