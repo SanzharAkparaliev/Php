@@ -26,7 +26,19 @@
 						}else{
 							$view->connectDB($connectResult);
 						}
+						$model->getConn()->close();
 						break;	
+
+					case "showallusers":
+						$connectResult = $model->connectDB();
+						if($connectResult == "Connection failed"){
+							$view->connectDB($connectResult. ": ".$model->getConn()->connect_error);
+						}else{
+							$users = $model -> getAllUsers();
+						}
+						$model->getConn()->close();
+						$view->showAllUsers($users);
+						break;
 					default : $view->index();
 				}
 			}else $view->index();
