@@ -17,10 +17,27 @@
 									$_POST["city"],
 									$_POST["password"]
 								);
-							$view->handleUserFormData($user);
+							$connectResult = $model->connectDB();
+							
+							if($connectResult == "Connection failed"){
+								$view->connectDB($connectResult. ": ".$model->getConn()->connect_error);
+							}else{
+								$resultMessage = $model->insertNewUser($user);
+
+								if($resultMessage == "Something gone wrong"){
+
+								}else{
+									$user->setId($resultMessage);
+									$view->handleUserFormData($user);
+								}
+							}
+							$model->getConn()->close();
 						break;
-					case "connect":
+					
+			     	
+						case "connect":
 						$connectResult = $model->connectDB();
+						
 						if($connectResult == "Connection failed"){
 							$view->connectDB($connectResult. ": ".$model->getConn()->connect_error);
 						}else{
@@ -28,6 +45,8 @@
 						}
 						$model->getConn()->close();
 						break;	
+
+
 
 					case "showallusers":
 						$connectResult = $model->connectDB();
@@ -39,9 +58,14 @@
 						$model->getConn()->close();
 						$view->showAllUsers($users);
 						break;
+
+
 					default : $view->index();
 				}
-			}else $view->index();
+
+			}
+			
+			else $view->index();
 			
 			$view->importFoot();
 		}

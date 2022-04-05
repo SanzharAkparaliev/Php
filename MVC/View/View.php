@@ -43,7 +43,9 @@
 		public function handleUserFormData($user){			
 			$title = "User Form Data";
 			$contentMainBlock ="
+							<h1>User added successfully!</h1>
 							<table>
+							    <tr><td>User name</td><td>".$user->getId()."</td></tr>
 								<tr><td>User name</td><td>".$user->getUserName()."</td></tr>
 								<tr><td>User email</td><td>".$user->getUserEmail()."</td></tr>
 								<tr><td>User gender</td><td>".$user->getUserGender()."</td></tr>
@@ -64,6 +66,10 @@
 
 		public function showAllUsers($users){
 			$title = "Show All Users";
+
+			if(count($users) == 0){
+				$contentMainBlock = "<p>No users found</p>";
+			}else{
 			$tableHead = "<table border=1><tr><th>UserName</th><th>Email</th><th>Gender</th><th>City</th><th>Password</th></tr>";
 			$tableBody = "";
 			foreach($users as $user){
@@ -78,9 +84,11 @@
 				";
 			}
 			$tableFoot = "</table>";
-			
+
+			$contentMainBlock = $tableHead.$tableBody.$tableFoot;
+		}
 			include "./View/Regna/mainblock.php";
-			printMB($title, $tableHead.$tableBody.$tableFoot);
+			printMB($title, $contentMainBlock);
 		}
 		
 		public function importHead(){
