@@ -1,5 +1,6 @@
 <?php
 	class User{
+		private $id;
 		private $userName;
 		private $userEmail;
 		private $userGender;
@@ -17,6 +18,11 @@
 		public function getUserName(){
 			return $this->userName;
 		}
+
+		public function getId(){
+			return $this->id;
+		}
+
 		
 		public function getUserEmail(){
 			return $this->userEmail;
@@ -36,6 +42,10 @@
 		
 		public function setUserName(String $userName){
 			$this->userName = $userName;
+		}
+
+		public function setId(int $id){
+			$this->id = $id; 
 		}
 		
 		public function setUserEmail(String $userEmail){

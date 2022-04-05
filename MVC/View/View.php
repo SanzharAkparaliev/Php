@@ -54,6 +54,34 @@
 			include "./View/Regna/mainblock.php";
 			printMB($title, $contentMainBlock);
 		}
+
+		public function connectDB($message){
+			$title = "Connection result";
+
+			include "./View/Regna/mainblock.php";
+			printMB($title,$message);
+		}
+
+		public function showAllUsers($users){
+			$title = "Show All Users";
+			$tableHead = "<table border=1><tr><th>UserName</th><th>Email</th><th>Gender</th><th>City</th><th>Password</th></tr>";
+			$tableBody = "";
+			foreach($users as $user){
+				$tableBody = $tableBody."
+				<tr>
+					<td>".$user->getUserName()."</td>
+					<td>".$user->getUserEmail()."</td>
+					<td>".$user->getUserGender()."</td>
+					<td>".$user->getUserCity()."</td>
+					<td>".$user->getUserPassword()."</td>
+				</tr>
+				";
+			}
+			$tableFoot = "</table>";
+			
+			include "./View/Regna/mainblock.php";
+			printMB($title, $tableHead.$tableBody.$tableFoot);
+		}
 		
 		public function importHead(){
 			include "./View/Regna/inner-page-head.html";

@@ -2,7 +2,7 @@
 	class Controller{
 		
 		// GET vs POST
-		public function selectPage($view){
+		public function selectPage($view,$model){
 			$view->importHead();
 			
 			if(isset($_GET['page'])){
@@ -18,6 +18,26 @@
 									$_POST["password"]
 								);
 							$view->handleUserFormData($user);
+						break;
+					case "connect":
+						$connectResult = $model->connectDB();
+						if($connectResult == "Connection failed"){
+							$view->connectDB($connectResult. ": ".$model->getConn()->connect_error);
+						}else{
+							$view->connectDB($connectResult);
+						}
+						$model->getConn()->close();
+						break;	
+
+					case "showallusers":
+						$connectResult = $model->connectDB();
+						if($connectResult == "Connection failed"){
+							$view->connectDB($connectResult. ": ".$model->getConn()->connect_error);
+						}else{
+							$users = $model -> getAllUsers();
+						}
+						$model->getConn()->close();
+						$view->showAllUsers($users);
 						break;
 					default : $view->index();
 				}
