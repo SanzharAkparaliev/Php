@@ -88,7 +88,7 @@
 				$stmt -> execute();
 
 				if($stmt->error){
-					$message = "Something gone wrong!";
+					$message = "Ooopps! Something gone wrong!";
 				}
 				else{
 					$message = $stmt->insert_id;
@@ -130,10 +130,82 @@
 				return $message;
 			}
 		}
-	
 
+		public function getUserById($userId){
+			$stmt = $this->conn -> stmt_init();
+
+			if ($stmt -> prepare("SELECT * FROM `user` WHERE `id` = ?")) {
+				$stmt->bind_param('d', $userId);
+				
+				// Execute query
+				$stmt -> execute();
+
+				// Bind result variables
+				$stmt -> bind_result($id, $name, $email, $gender, $city, $password);
+
+				$stmt->fetch();
+				
+				$user = new User($id, $name, $email, $gender, $city, $password);
+
+				// Close statement
+				$stmt -> close();
+				  
+				return $user;
+			}
+			else{
+				$message = "Ooopps! Something gone wrong!";
+				return $message;
+			}
+		}
 		
+		public function updateUserInfo($user){
+			$stmt = $this->conn -> stmt_init();
+
+			if ($stmt -> prepare("update 
+									`user` 
+								set 
+									`username` = ?, 
+									`useremail` = ?,
+									`usergender` = ?,
+									`usercity` = ?,
+									`userpassword` = ?
+									
+								where `user`.`id` = ?;")) {
 		
-		
+				$userName = $user->getUserName();
+				$email = $user->getUserEmail();
+				$gender = $user->getUserGender();
+				$city = $user->getUserCity();
+				$pass = $user->getUserPassword();
+				$id = $user->getId();
+				
+				$stmt->bind_param('sssssd', 
+										$userName, 
+										$email, 
+										$gender,
+										$city,
+										$pass,
+										$id
+									);
+				
+				// Execute query
+				$stmt -> execute();
+
+				if($stmt->error){
+					$message = "Ooopps! Something gone wrong!";
+				}
+				else{
+					$message = $stmt->affected_rows;
+				}
+				// Close statement
+				$stmt -> close();
+				  
+				return $message;
+			}
+			else{
+				$message = "Ooopps! Something gone wrong!";
+				return $message;
+			}
+		}
 	}
 ?>
